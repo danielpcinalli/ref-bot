@@ -5,9 +5,10 @@ import util as ut
 import config as cf
 
 question = "Reduzido à sua forma abstrata, o argumento do cidadão Weston traduzir-se-ia no seguinte:"
+
 similar_chunks = get_most_similar_chunks(question, 5)
 
-chunks_str = [f'[{n+1}]: {chunk}' for n, chunk in zip(itt.count(), [chunk for _, chunk in similar_chunks])]
+chunks_str = [f' {similarity*100:.1f}% : [{n+1}]:  [...]{chunk}[...]: ' for n, (similarity, chunk) in zip(itt.count(), similar_chunks)]
 chunks_str = '\n'.join(chunks_str)
 
 prompt = f"""

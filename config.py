@@ -1,5 +1,9 @@
 FOLDER_DOCS = 'docs'
 FOLDER_CHUNKS = 'chunks'
+FILE_WORD2VEC_MODEL = 'word2vec_model'
+
+CHUNK_SIZE = 150
+OVERLAP_SIZE = 15
 
 N_PROCESSES = 4
 

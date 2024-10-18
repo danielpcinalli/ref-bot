@@ -9,6 +9,10 @@ from openai import OpenAI
 
 import config as cf
 
+def get_file_names():
+    docs = list_files(f'./{cf.FOLDER_DOCS}')
+    return docs
+
 def split_lower_followed_by_upper(str):
     clean = re.compile(r'([a-z])([A-Z])')
     return re.sub(clean, r'\1 \2', str)
@@ -18,7 +22,7 @@ def create_path_if_not_exists(newpath):
         os.makedirs(newpath)
 
 def list_files(mypath):
-    return [f for f in listdir(mypath) if isfile(join(mypath, f))]
+    return [f for f in listdir(mypath) if isfile(join(mypath, f)) and f.endswith(".pdf")]
 
 def delete_all_chunks():
     chunks_path = f'./{cf.FOLDER_CHUNKS}/'
