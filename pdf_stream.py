@@ -1,9 +1,19 @@
+from itertools import count
+
 from pypdf import PdfReader
 
 import util as ut
 import config as cf
 
-
+def get_all_chunks_for_chromadb():
+    """
+    Retorna stream de chunks de todos os arquivos
+    """
+    file_names = ut.get_file_names()
+    for file_name in file_names:
+        chunk_stream = pdf_to_chunks(file_name)
+        for chunk, id_ in zip(chunk_stream, count()):
+            yield (f'{file_name}_{id_}', {"source": file_name}, chunk)
 
 
 def get_all_chunks():

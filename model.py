@@ -1,12 +1,19 @@
-from find_chunks_similarity import get_most_similar_chunks
 import itertools as itt
+from chromadb_client import get_collection
 
 import util as ut
-import config as cf
 
-question = "Reduzido à sua forma abstrata, o argumento do cidadão Weston traduzir-se-ia no seguinte:"
+collection = get_collection()
 
-similar_chunks = get_most_similar_chunks(question, 5)
+# question = "Reduzido à sua forma abstrata, o argumento do cidadão Weston traduzir-se-ia no seguinte:"
+question = "Qual é o argumento apresentado pelo cidadão Weston, reduzido em sua forma abstrata?"
+
+# passando para formato antigo de resposta para manter resto do código
+results = collection.query(query_texts=[question], n_results=5)
+similarities = results['distances'][0]
+docs = results['documents'][0]
+similar_chunks = zip(similarities, docs)
+
 
 chunks_str = [f' {similarity*100:.1f}% : [{n+1}]:  [...]{chunk}[...]: ' for n, (similarity, chunk) in zip(itt.count(), similar_chunks)]
 chunks_str = '\n'.join(chunks_str)

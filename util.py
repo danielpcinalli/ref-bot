@@ -36,3 +36,13 @@ def get_response(model, prompt):
         llm = OllamaLLM(model=model)
         response = llm.invoke(prompt)
     return response
+
+def generator_slicer(generator, slice_size):
+    slice_ = []
+    for item in generator:
+        slice_.append(item)
+        if len(slice_) == slice_size:
+            yield slice_
+            slice_.clear()
+    if slice_:
+        yield slice_
